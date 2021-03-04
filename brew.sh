@@ -72,20 +72,21 @@ brew install vbindiff
 brew install zopfli
 
 # casks
-brew install --cask visual-studio-code
-brew install --cask intellij-idea
+brew install --cask visual-studio-code \
+    intellij-idea \
+    phpstorm
 brew install --cask istat-menus
 brew install --cask \
     appcleaner \
     docker \
     microsoft-office \
     dropbox \
+    spotify \
     google-chrome \
     bettertouchtool \
     1password \
     transmission \
     vlc \
-    harvest
 
 
 # Remove outdated versions from the cellar.

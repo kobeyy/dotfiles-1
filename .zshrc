@@ -17,7 +17,7 @@ fi
 autoload bashcompinit
 bashcompinit
 # Path to your oh-my-zsh installation.
-export ZSH="${(q-)PWD}/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 DISABLE_UPDATE_PROMPT=true
 DISABLE_AUTO_UPDATE=false
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -36,30 +36,23 @@ fpath=( ~/.functions "${fpath[@]}" )
 
 source $ZSH/oh-my-zsh.sh
 
-
 # Colors:
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 
 # Large history file
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=1000000
-SAVEHIST=$HISTSIZ
+## History file configuration
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+[ "$HISTSIZE" -lt 50000 ] && HISTSIZE=5000000
+[ "$SAVEHIST" -lt 10000 ] && SAVEHIST=1000000
 
-# Prevent duplicates in history
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_FIND_NO_DUPS
-setopt HIST_SAVE_NO_DUPS
+## History command configuration
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
 
-setopt hist_ignore_all_dups # remove older duplicate entries from history
-setopt hist_reduce_blanks # remove superfluous blanks from history items
-setopt inc_append_history # save history entries as soon as they are entered
-setopt share_history # share history between different instances of the shell
-setopt auto_cd # cd by typing directory name if it's not a command
-setopt correct_all # autocorrect commands
-setopt auto_list # automatically list choices on ambiguous completion
-setopt auto_menu # automatically use menu completion
-setopt always_to_end # move cursor to end if word had one match
 
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
@@ -70,16 +63,6 @@ prompt_context() {}
 
 # export MANPATH="/usr/local/man:$MANPATH"
 ZSH_CUSTOM=$ZSH/custom
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='vim'
-fi
 
 # source all files
 if [ -f ~/.bash_aliases ]; then
@@ -94,9 +77,11 @@ if [ -f ~/.bash_aws ]; then
     . ~/.bash_aws
 fi
 
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+# remap caps lock to backspace in macos
+hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x70000002A}]}'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
