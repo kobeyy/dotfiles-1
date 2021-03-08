@@ -169,3 +169,45 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+function oase() {
+	if [ $1 = "up" ]; then
+		echo 'start backend';
+		cd /Users/bagaar/Documents/projects/oase-backend/docker
+		docker-compose up -d
+		echo 'start frontend';
+		cd /Users/bagaar/Documents/projects/oase-frontend
+		yarn start 
+	elif [ $1 = "down" ]; then
+		echo 'bring down backend';
+		cd /Users/bagaar/Documents/projects/oase-backend/docker
+		docker-compose down
+	elif [ $1 = "restart" ]; then
+		echo 'restart app';
+		cd /Users/bagaar/Documents/projects/oase-backend/docker
+		docker-compose restart app
+	else
+		echo 'choose between "up" or "down"'
+	fi;
+}
+
+function orbit() {
+	if [ $1 = "up" ]; then
+		echo 'start backend';
+		cd /Users/bagaar/Documents/projects/orbit-api
+		make up
+		echo 'start frontend';
+		cd /Users/bagaar/Documents/projects/orbit-front-end
+		yarn start 
+	elif [ $1 = "down" ]; then
+		echo 'bring down backend';
+		cd /Users/bagaar/Documents/projects/orbit-api
+		make down
+	elif [ $1 = "restart" ]; then
+		echo 'restart app';
+		cd /Users/bagaar/Documents/projects/orbit-api
+		docker-compose restart app
+	else
+		echo 'choose between "up" or "down"'
+	fi;
+}

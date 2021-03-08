@@ -30,7 +30,8 @@ plugins=(
     git 
     zsh-autosuggestions
     history
-    nmap)
+    nmap
+    kubectl)
 
 fpath=( ~/.functions "${fpath[@]}" )
 
@@ -78,10 +79,6 @@ if [ -f ~/.bash_aws ]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
-# remap caps lock to backspace in macos
-hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x70000002A}]}'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
